@@ -3,12 +3,32 @@ import React from "react";
 import "./App.css";
 import { Canvas } from "./Canvas";
 
+function UITop() {
+  return (
+    <div className="ui top">
+      <div>left</div>
+      <div>
+        <button>back</button>
+        <button>play</button>
+        <button>pause</button>
+        <button>step</button>
+      </div>
+      <div>right</div>
+    </div>
+  );
+}
+
+function UIBottom() {
+  return <div className="ui bottom">TEST UI</div>;
+}
+
 function App() {
   return (
     <div className="App">
       <Canvas></Canvas>
 
-      <div id="controlles">TEST UI</div>
+      <UITop></UITop>
+      <UIBottom></UIBottom>
     </div>
   );
 }

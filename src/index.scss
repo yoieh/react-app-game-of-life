@@ -15,16 +15,26 @@ body,
 canvas {
   top: 0;
   left: 0;
+  right: 0;
   position: relative;
 }
 
-#controlles {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+.ui {
+  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.top {
+  top: 0;
+  justify-content: space-between;
+}
+
+.bottom {
+  bottom: 0;
 }
