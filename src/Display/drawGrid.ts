@@ -15,9 +15,10 @@ export const drawGrid = (
 
     if (cell.getValue()) {
       context.fillRect(x, y, grid.getCellSize(), grid.getCellSize());
-    } else {
-      context.clearRect(x, y, grid.getCellSize(), grid.getCellSize());
     }
+    // else {
+    //   context.clearRect(x, y, grid.getCellSize(), grid.getCellSize());
+    // }
 
     context.strokeStyle = "#C0C0C0";
     context.lineWidth = 0.05;

@@ -53,9 +53,10 @@ class Engine {
     this.lastTime = this.time;
     this.fpsCounter += this.deltaTime;
     if (this.fpsCounter >= this.fpsInterval) {
-      this.fps = (1 / this.deltaTime) * 1000; // this.fpsCounter / (this.time - this.fpsLastTime);
+      this.fps = (1 / this.deltaTime) * this.fpsInterval; // this.fpsCounter / (this.time - this.fpsLastTime);
       this.fpsCounter = 0;
       this.fpsLastTime = this.time;
+      this.fpsLastInterval = this.fpsInterval;
     }
 
     this.entities.forEach((entity) => {
@@ -64,6 +65,9 @@ class Engine {
   }
 
   public render() {
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.entities.forEach((entity) => {
       entity.render(this.ctx);

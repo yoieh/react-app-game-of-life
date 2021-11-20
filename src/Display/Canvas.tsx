@@ -4,16 +4,18 @@ import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
 import Grid from "../Grid/Grid";
 import { reziseCanvas } from "./reziseCanvas";
+import Engine from "../Engine/Engine";
 
 interface CanvasProps {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
+  setRef: (node: HTMLCanvasElement) => void;
   grid: Grid<boolean>;
+  engineRef: React.MutableRefObject<Engine | undefined>;
 }
 
 export const Canvas: React.FC<CanvasProps> = function ({
-  canvasRef,
+  setRef,
   grid,
-  // ...props
+  engineRef,
 }) {
   const handleContextMenu = useCallback(
     (event) => {
@@ -23,7 +25,7 @@ export const Canvas: React.FC<CanvasProps> = function ({
   );
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = engineRef.current?.getCanvas();
     canvas?.addEventListener("contextmenu", handleContextMenu);
     return () => {
       canvas?.removeEventListener("contextmenu", handleContextMenu);
@@ -31,15 +33,13 @@ export const Canvas: React.FC<CanvasProps> = function ({
   });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) reziseCanvas(canvas);
-  }, [canvasRef, grid]);
+    if (engineRef.current) reziseCanvas(engineRef.current);
+  }, [engineRef]);
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={(node) => node && setRef(node)}
       onClick={(e) => clickOnCanvas(e, grid)}
-      // {...props}
     />
   );
 };
