@@ -2,17 +2,19 @@ import React from "react";
 
 import "./UI.scss";
 
-export function UITop() {
+export const UITop = function () {
   return (
     <div className="ui top">
       <div>left</div>
       <div>
-        <button>back</button>
-        <button>play</button>
-        <button>pause</button>
-        <button>step</button>
+        <button type="button">back</button>
+        <button type="button">play</button>
+        <button type="button">pause</button>
+        <button type="button">step</button>
       </div>
       <div>right</div>
     </div>
   );
-}
+};
+
+export default UITop;

@@ -11,11 +11,11 @@ interface CanvasProps {
   grid: Grid<boolean>;
 }
 
-export const Canvas: React.FC<CanvasProps> = ({
+export const Canvas: React.FC<CanvasProps> = function ({
   canvasRef,
   grid,
-  ...props
-}) => {
+  // ...props
+}) {
   const handleContextMenu = useCallback(
     (event) => {
       leftClickOnCanvas(event, grid);
@@ -35,7 +35,7 @@ export const Canvas: React.FC<CanvasProps> = ({
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
 
-    if (canvas) reziseCanvas(canvas, grid);
+    if (canvas) reziseCanvas(canvas);
     if (context) drawGrid(context, grid);
   }, [canvasRef, grid]);
 
@@ -43,7 +43,9 @@ export const Canvas: React.FC<CanvasProps> = ({
     <canvas
       ref={canvasRef}
       onClick={(e) => clickOnCanvas(e, grid)}
-      {...props}
+      // {...props}
     />
   );
 };
+
+export default Canvas;

@@ -2,6 +2,8 @@ import React from "react";
 
 import "./UI.scss";
 
-export function UIBottom() {
+export const UIBottom = function () {
   return <div className="ui bottom">TEST UI</div>;
-}
+};
+
+export default UIBottom;

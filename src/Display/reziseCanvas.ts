@@ -1,6 +1,6 @@
-import Grid from "../Grid/Grid";
-
-export const reziseCanvas = (canvas: HTMLCanvasElement, grid: Grid<any>) => {
+export const reziseCanvas = (canvas: HTMLCanvasElement) => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 };
+
+export default reziseCanvas;

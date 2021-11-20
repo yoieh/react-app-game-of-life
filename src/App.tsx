@@ -6,8 +6,9 @@ import { Canvas } from "./Display/Canvas";
 import Grid from "./Grid/Grid";
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
+import Engine from "./Engine/Engine";
 
-function App() {
+const App: React.FC = function () {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const grid = useMemo<Grid<boolean>>(() => {
@@ -15,23 +16,31 @@ function App() {
 
     testGrid.generate();
 
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 10; index += 1) {
       testGrid.getRandomCell()?.setValue(true);
     }
 
     return testGrid;
   }, []);
 
-  console.log(grid);
+  const engine = useMemo(() => {
+    if (canvasRef.current) {
+      const memoEngine = new Engine(canvasRef.current);
+      memoEngine.start();
+      return memoEngine;
+    }
+    return undefined;
+  }, [canvasRef]);
 
   return (
     <div className="App">
-      <Canvas {...{ canvasRef, grid }}></Canvas>
+      {engine?.getFps()}
+      <Canvas {...{ canvasRef, grid }} />
 
-      <UITop></UITop>
-      <UIBottom></UIBottom>
+      <UITop />
+      <UIBottom />
     </div>
   );
-}
+};
 
 export default App;

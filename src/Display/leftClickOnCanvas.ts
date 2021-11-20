@@ -20,3 +20,5 @@ export const leftClickOnCanvas = (
     }
   }
 };
+
+export default leftClickOnCanvas;

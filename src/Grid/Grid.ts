@@ -3,8 +3,11 @@ import { Position } from "./Position";
 
 class Grid<Type> {
   private width: number;
+
   private height: number;
+
   private cellSize: number;
+
   private cells: Cell<Type>[];
 
   constructor(width: number, height: number, cellSize: number) {
@@ -15,7 +18,7 @@ class Grid<Type> {
   }
 
   generate() {
-    for (let i = 0; i < this.width * this.height; i++) {
+    for (let i = 0; i < this.width * this.height; i += 1) {
       this.cells.push(
         new Cell<Type>({ x: i % this.width, y: Math.floor(i / this.width) }),
       );
@@ -25,6 +28,7 @@ class Grid<Type> {
   positionToIndex({ x, y }: Position) {
     return x + this.width * y;
   }
+
   indexToPosition(index: number): Position {
     const x = index % this.width;
     const y = Math.floor(index / this.width);
@@ -47,6 +51,7 @@ class Grid<Type> {
       Math.floor(position.y / this.cellSize),
     );
   }
+
   getCellByIndex(index: number) {
     const x = index % this.width;
     const y = index / this.width;
@@ -56,15 +61,19 @@ class Grid<Type> {
   getCells() {
     return this.cells;
   }
+
   getWidth() {
     return this.width;
   }
+
   getHeight() {
     return this.height;
   }
+
   getCellSize() {
     return this.cellSize;
   }
+
   getRandomCell() {
     return this.getCellByIndex(Math.floor(Math.random() * this.cells.length));
   }

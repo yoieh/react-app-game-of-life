@@ -20,3 +20,5 @@ export const clickOnCanvas = (
     }
   }
 };
+
+export default clickOnCanvas;

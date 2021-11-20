@@ -6,7 +6,7 @@ export const drawGrid = (
 ) => {
   const cells = grid.getCells();
 
-  for (let i = 0; i < cells.length; i++) {
+  for (let i = 0; i < cells.length; i += 1) {
     const cell = cells[i];
     const position = grid.indexToPosition(i);
 
@@ -24,3 +24,5 @@ export const drawGrid = (
     context.strokeRect(x, y, grid.getCellSize(), grid.getCellSize());
   }
 };
+
+export default drawGrid;
