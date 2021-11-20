@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 
-import { reziseCanvas } from "./reziseCanvas";
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
-// import { drawGrid } from "./drawGrid";
 import Grid from "../Grid/Grid";
+import { reziseCanvas } from "./reziseCanvas";
 
 interface CanvasProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -33,12 +32,8 @@ export const Canvas: React.FC<CanvasProps> = function ({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    // const context = canvas?.getContext("2d");
     if (canvas) reziseCanvas(canvas);
-    // if (context) drawGrid(context, grid);
   }, [canvasRef, grid]);
-
-  console.log(canvasRef);
 
   return (
     <canvas

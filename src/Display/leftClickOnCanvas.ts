@@ -1,6 +1,5 @@
 import React from "react";
 import Grid from "../Grid/Grid";
-import { drawGrid } from "./drawGrid";
 
 export const leftClickOnCanvas = (
   event: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
@@ -14,9 +13,8 @@ export const leftClickOnCanvas = (
     const position = grid.getPositionFromEvent(event);
     const cell = grid.getCell(position.x, position.y);
 
-    if (!cell.isEmpty()) {
+    if (cell && !cell.isEmpty()) {
       cell.setValue(false);
-      drawGrid(context, grid);
     }
   }
 };

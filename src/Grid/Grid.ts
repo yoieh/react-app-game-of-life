@@ -13,6 +13,8 @@ class Grid<Type> extends BaseEntity implements IGrid<Type> {
 
   cells: Cell<Type>[];
 
+  private nextActionTime: number = 0;
+
   constructor(width: number, height: number, cellSize: number) {
     super("Grid");
     this.width = width;
@@ -22,8 +24,18 @@ class Grid<Type> extends BaseEntity implements IGrid<Type> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  update() {
+  update(deltaTime: number) {
     // do nothing
+    // let { cellSize } = this;
+
+    if (deltaTime > this.nextActionTime) {
+      this.nextActionTime += 0.1;
+    }
+
+    if (this.cellSize > 10) {
+      this.nextActionTime = 0;
+    }
+    this.cellSize = this.nextActionTime;
   }
 
   render(ctx: CanvasRenderingContext2D) {

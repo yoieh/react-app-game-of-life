@@ -53,10 +53,11 @@ class Engine {
     this.lastTime = this.time;
     this.fpsCounter += this.deltaTime;
     if (this.fpsCounter >= this.fpsInterval) {
-      this.fps = this.fpsCounter / (this.time - this.fpsLastTime);
+      this.fps = (1 / this.deltaTime) * 1000; // this.fpsCounter / (this.time - this.fpsLastTime);
       this.fpsCounter = 0;
       this.fpsLastTime = this.time;
     }
+
     this.entities.forEach((entity) => {
       entity.update(this.deltaTime);
     });
@@ -70,6 +71,7 @@ class Engine {
   }
 
   public start() {
+    console.log("Engine started");
     this.lastTime = Date.now();
     this.fpsLastTime = Date.now();
     this.loop();

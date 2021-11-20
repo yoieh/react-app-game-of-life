@@ -24,15 +24,6 @@ const App: React.FC = function () {
     return testGrid;
   }, []);
 
-  // const engine = useMemo(() => {
-  //   if (canvasRef.current) {
-  //     const memoEngine = new Engine(canvasRef.current);
-  //     memoEngine.start();
-  //     return memoEngine;
-  //   }
-  //   return undefined;
-  // }, [canvasRef]);
-
   useEffect(() => {
     if (canvasRef.current && !stated) {
       const engine = new Engine(canvasRef.current);
@@ -40,7 +31,7 @@ const App: React.FC = function () {
       engine.addEntity(grid);
       setStated(true);
     }
-  }, [canvasRef, grid, stated]);
+  }, [grid, stated]);
 
   return (
     <div className="App">
