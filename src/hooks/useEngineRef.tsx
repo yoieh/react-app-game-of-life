@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import Engine from "./Engine/Engine";
+import Engine from "../Engine/Engine";
 
 export const useEngineRef = () => {
   const engineRef: React.MutableRefObject<Engine | undefined> =

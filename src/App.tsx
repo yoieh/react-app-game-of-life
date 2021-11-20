@@ -6,7 +6,7 @@ import { Canvas } from "./Display/Canvas";
 import Grid from "./Grid/Grid";
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
-import { useEngineRef } from "./useEngineRef";
+import { useEngineRef } from "./hooks/useEngineRef";
 
 const App: React.FC = function () {
   const { createEngine, engineRef } = useEngineRef();
