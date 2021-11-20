@@ -1,3 +1,5 @@
+import { IEntity } from "./IEntity";
+
 class Engine {
   private canvas: any;
 
@@ -7,7 +9,7 @@ class Engine {
 
   private height: any;
 
-  private entities: never[];
+  private entities: IEntity[];
 
   private time: number;
 
@@ -55,17 +57,15 @@ class Engine {
       this.fpsCounter = 0;
       this.fpsLastTime = this.time;
     }
-    this.entities.forEach((entity: never) => {
-      console.log(entity);
-      // entity.update(this.deltaTime);
+    this.entities.forEach((entity) => {
+      entity.update(this.deltaTime);
     });
   }
 
   public render() {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.entities.forEach((entity: never) => {
-      console.log(entity);
-      // entity.render(this.ctx);
+    this.entities.forEach((entity) => {
+      entity.render(this.ctx);
     });
   }
 
@@ -81,11 +81,11 @@ class Engine {
     requestAnimationFrame(() => this.loop());
   }
 
-  public addEntity(entity: never) {
+  public addEntity(entity: IEntity) {
     this.entities.push(entity);
   }
 
-  public removeEntity(entity: never) {
+  public removeEntity(entity: IEntity) {
     this.entities.splice(this.entities.indexOf(entity), 1);
   }
 

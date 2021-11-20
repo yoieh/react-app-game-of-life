@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 
@@ -9,6 +9,7 @@ import { UITop } from "./UI/UITop";
 import Engine from "./Engine/Engine";
 
 const App: React.FC = function () {
+  const [stated, setStated] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const grid = useMemo<Grid<boolean>>(() => {
@@ -23,18 +24,27 @@ const App: React.FC = function () {
     return testGrid;
   }, []);
 
-  const engine = useMemo(() => {
-    if (canvasRef.current) {
-      const memoEngine = new Engine(canvasRef.current);
-      memoEngine.start();
-      return memoEngine;
+  // const engine = useMemo(() => {
+  //   if (canvasRef.current) {
+  //     const memoEngine = new Engine(canvasRef.current);
+  //     memoEngine.start();
+  //     return memoEngine;
+  //   }
+  //   return undefined;
+  // }, [canvasRef]);
+
+  useEffect(() => {
+    if (canvasRef.current && !stated) {
+      const engine = new Engine(canvasRef.current);
+      engine.start();
+      engine.addEntity(grid);
+      setStated(true);
     }
-    return undefined;
-  }, [canvasRef]);
+  }, [canvasRef, grid, stated]);
 
   return (
     <div className="App">
-      {engine?.getFps()}
+      {/* {engine?.getFps()} */}
       <Canvas {...{ canvasRef, grid }} />
 
       <UITop />

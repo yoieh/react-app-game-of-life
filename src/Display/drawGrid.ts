@@ -1,8 +1,8 @@
-import Grid from "../Grid/Grid";
+import { IGrid } from "../Grid/IGrid";
 
 export const drawGrid = (
   context: CanvasRenderingContext2D,
-  grid: Grid<any>,
+  grid: IGrid<any>,
 ) => {
   const cells = grid.getCells();
 

@@ -1,20 +1,33 @@
+import { BaseEntity } from "../Engine/BaseEntity";
 import { Cell } from "./Cell";
 import { Position } from "./Position";
+import { drawGrid } from "../Display/drawGrid";
+import { IGrid } from "./IGrid";
 
-class Grid<Type> {
-  private width: number;
+class Grid<Type> extends BaseEntity implements IGrid<Type> {
+  width: number;
 
-  private height: number;
+  height: number;
 
-  private cellSize: number;
+  cellSize: number;
 
-  private cells: Cell<Type>[];
+  cells: Cell<Type>[];
 
   constructor(width: number, height: number, cellSize: number) {
+    super("Grid");
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
     this.cells = [];
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  update() {
+    // do nothing
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    drawGrid(ctx, this);
   }
 
   generate() {
