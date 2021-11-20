@@ -1,5 +1,5 @@
 {
-  "name": "demo-life-game",
+  "name": "react-app-game-of-life",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
