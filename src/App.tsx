@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 
@@ -6,40 +6,10 @@ import { Canvas } from "./Display/Canvas";
 import Grid from "./Grid/Grid";
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
-import Engine from "./Engine/Engine";
-
-const useCanvasRef = () => {
-  const ref: React.MutableRefObject<HTMLCanvasElement | undefined> =
-    useRef<HTMLCanvasElement>();
-  const engineRef: React.MutableRefObject<Engine | undefined> =
-    useRef<Engine>();
-
-  const setRef = useCallback((node: HTMLCanvasElement) => {
-    if (ref.current) {
-      // Make sure to cleanup any events/references added to the last instance
-    }
-
-    if (node) {
-      // Check if a node is actually passed. Otherwise node would be null.
-      // You can now do what you need to, addEventListeners, measure, etc.
-
-      if (!engineRef.current) {
-        engineRef.current = new Engine(node);
-        engineRef.current.start();
-      }
-    }
-
-    // Save a reference to the node
-    ref.current = node;
-  }, []);
-
-  return { setRef, ref, engineRef };
-};
+import { useEngineRef } from "./useEngineRef";
 
 const App: React.FC = function () {
-  // const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const { setRef, ref, engineRef } = useCanvasRef();
+  const { createEngine, engineRef } = useEngineRef();
 
   const grid = useMemo<Grid<boolean>>(() => {
     const testGrid = new Grid<boolean>(100, 100, 10);
@@ -54,14 +24,14 @@ const App: React.FC = function () {
   }, []);
 
   useEffect(() => {
-    if (ref.current && engineRef.current) {
+    if (engineRef.current && engineRef.current?.getEntities().length <= 0) {
       engineRef.current.addEntity(grid);
     }
-  }, [ref, grid, engineRef]);
+  }, [grid, engineRef]);
 
   return (
     <div className="App">
-      <Canvas setRef={setRef} engineRef={engineRef} {...{ grid }} />
+      <Canvas setRef={createEngine} engine={engineRef} {...{ grid }} />
 
       <UITop />
       <UIBottom />

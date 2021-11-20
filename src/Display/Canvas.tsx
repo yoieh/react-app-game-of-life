@@ -9,13 +9,13 @@ import Engine from "../Engine/Engine";
 interface CanvasProps {
   setRef: (node: HTMLCanvasElement) => void;
   grid: Grid<boolean>;
-  engineRef: React.MutableRefObject<Engine | undefined>;
+  engine: React.MutableRefObject<Engine | undefined>;
 }
 
 export const Canvas: React.FC<CanvasProps> = function ({
   setRef,
   grid,
-  engineRef,
+  engine,
 }) {
   const handleContextMenu = useCallback(
     (event) => {
@@ -25,7 +25,7 @@ export const Canvas: React.FC<CanvasProps> = function ({
   );
 
   useEffect(() => {
-    const canvas = engineRef.current?.getCanvas();
+    const canvas = engine.current?.getCanvas();
     canvas?.addEventListener("contextmenu", handleContextMenu);
     return () => {
       canvas?.removeEventListener("contextmenu", handleContextMenu);
@@ -33,8 +33,8 @@ export const Canvas: React.FC<CanvasProps> = function ({
   });
 
   useEffect(() => {
-    if (engineRef.current) reziseCanvas(engineRef.current);
-  }, [engineRef]);
+    if (engine.current) reziseCanvas(engine.current);
+  }, [engine]);
 
   return (
     <canvas
