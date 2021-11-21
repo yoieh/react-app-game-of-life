@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IEntity } from "./IEntity";
 import { IComponent } from "./IComponent";
 
@@ -22,17 +24,9 @@ export class BaseEntity implements IEntity {
     this.components = components;
   }
 
-  update(deltaTime: number) {
-    console.log(deltaTime);
-    console.log(this);
-    throw new Error("Method not implemented.");
-  }
+  update(deltaTime: number) {}
 
-  render(ctx: CanvasRenderingContext2D) {
-    console.log(ctx);
-    console.log(this);
-    throw new Error("Method not implemented.");
-  }
+  render(ctx: CanvasRenderingContext2D) {}
 
   getComponent(componentType: any) {
     return this.components.find(

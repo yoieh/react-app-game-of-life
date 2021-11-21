@@ -7,15 +7,14 @@ export const drawGrid = (
   const cells = grid.getCells();
 
   for (let i = 0; i < cells.length; i += 1) {
-    const cell = cells[i];
     const position = grid.indexToPosition(i);
 
     const x = position.x * grid.getCellSize();
     const y = position.y * grid.getCellSize();
 
-    if (cell.getValue()) {
-      context.fillRect(x, y, grid.getCellSize(), grid.getCellSize());
-    }
+    // if (cell.getValue()) {
+    //   context.fillRect(x, y, grid.getCellSize(), grid.getCellSize());
+    // }
     // else {
     //   context.clearRect(x, y, grid.getCellSize(), grid.getCellSize());
     // }

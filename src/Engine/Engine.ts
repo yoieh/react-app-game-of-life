@@ -1,15 +1,27 @@
-import { IEntity } from "./IEntity";
+import EntityManager from "./EntityManager";
 
 class Engine {
   private canvas: any;
 
-  private ctx: any;
+  get ctx() {
+    return this.canvas.getContext("2d");
+  }
 
-  private width: any;
+  get Width() {
+    return this.canvas.width;
+  }
 
-  private height: any;
+  set Width(width: number) {
+    this.canvas.width = width;
+  }
 
-  private entities: IEntity[];
+  get Height() {
+    return this.canvas.height;
+  }
+
+  set Height(height: number) {
+    this.canvas.height = height;
+  }
 
   private time: number;
 
@@ -27,12 +39,9 @@ class Engine {
 
   private fpsLastTime: number;
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.entities = [];
+  public EntityManager: EntityManager = new EntityManager();
+
+  constructor() {
     // this.collisionManager = new CollisionManager(this);
     // this.inputManager = new InputManager(this);
     // this.camera = new Camera(this);
@@ -59,17 +68,17 @@ class Engine {
       this.fpsLastInterval = this.fpsInterval;
     }
 
-    this.entities.forEach((entity) => {
+    this.EntityManager?.getEntities().forEach((entity) => {
       entity.update(this.deltaTime);
     });
   }
 
   public render() {
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+    this.canvas.width = this.Width;
+    this.canvas.height = this.Height;
 
-    this.ctx.clearRect(0, 0, this.width, this.height);
-    this.entities.forEach((entity) => {
+    this.ctx.clearRect(0, 0, this.Width, this.Height);
+    this.EntityManager?.getEntities().forEach((entity) => {
       entity.render(this.ctx);
     });
   }
@@ -87,32 +96,17 @@ class Engine {
     requestAnimationFrame(() => this.loop());
   }
 
-  public addEntity(entity: IEntity) {
-    this.entities.push(entity);
-  }
-
-  public removeEntity(entity: IEntity) {
-    this.entities.splice(this.entities.indexOf(entity), 1);
-  }
-
-  public getEntities() {
-    return this.entities;
+  public setEntityManager(entityManager: EntityManager) {
+    console.log("EntityManager set");
+    this.EntityManager = entityManager;
   }
 
   public getCanvas() {
     return this.canvas;
   }
 
-  public getCtx() {
-    return this.ctx;
-  }
-
-  public getWidth() {
-    return this.width;
-  }
-
-  public getHeight() {
-    return this.height;
+  public setCanvas(canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
   }
 
   public getTime() {
@@ -145,14 +139,6 @@ class Engine {
 
   public setLastTime(lastTime: number) {
     this.lastTime = lastTime;
-  }
-
-  public setWidth(width: number) {
-    this.width = width;
-  }
-
-  public setHeight(height: number) {
-    this.height = height;
   }
 }
 

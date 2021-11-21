@@ -25,7 +25,7 @@ class Grid<Type> extends BaseEntity implements IGrid<Type> {
 
   // eslint-disable-next-line class-methods-use-this
   update(deltaTime: number) {
-    if (!deltaTime) {
+    if (deltaTime === undefined) {
       throw new Error("deltaTime is not defined");
     }
     // do nothing

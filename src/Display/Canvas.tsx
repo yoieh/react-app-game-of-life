@@ -9,7 +9,7 @@ import Engine from "../Engine/Engine";
 interface CanvasProps {
   setRef: (node: HTMLCanvasElement) => void;
   grid: Grid<boolean>;
-  engine: React.MutableRefObject<Engine | undefined>;
+  engine: Engine;
 }
 
 export const Canvas: React.FC<CanvasProps> = function ({
@@ -25,21 +25,23 @@ export const Canvas: React.FC<CanvasProps> = function ({
   );
 
   useEffect(() => {
-    const canvas = engine.current?.getCanvas();
+    const canvas = engine?.getCanvas();
     canvas?.addEventListener("contextmenu", handleContextMenu);
     return () => {
       canvas?.removeEventListener("contextmenu", handleContextMenu);
     };
-  });
+  }, [engine, handleContextMenu]);
 
   useEffect(() => {
-    if (engine.current) reziseCanvas(engine.current);
+    console.log("engine", engine);
+
+    if (engine) reziseCanvas(engine);
   }, [engine]);
 
   return (
     <canvas
       ref={(node) => node && setRef(node)}
-      onClick={(e) => clickOnCanvas(e, grid)}
+      onClick={(e) => clickOnCanvas(e, grid, engine.EntityManager)}
     />
   );
 };
