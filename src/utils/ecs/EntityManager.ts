@@ -1,6 +1,15 @@
 import { Entity, IEntity } from ".";
 
-export abstract class EntityManager {
+export class EntityManager {
+  private static instance: EntityManager;
+
+  public static get Instance(): EntityManager {
+    if (!EntityManager.instance) {
+      EntityManager.instance = new EntityManager();
+    }
+    return EntityManager.instance;
+  }
+
   private entities: IEntity[];
 
   get Entities() {

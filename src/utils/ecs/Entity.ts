@@ -37,16 +37,6 @@ export class Entity implements IEntity {
   public HasComponent<C extends IComponent>(constr: Constr<C>): boolean {
     return this.components.find((c) => c instanceof constr) !== undefined;
   }
-
-  // public Destroy(): void {}
-
-  // public Awake(): void {
-  //   this.components.forEach((c) => c.Awake());
-  // }
-
-  // public Update(deltaTime: number): void {
-  //   this.components.forEach((c) => c.Update(deltaTime));
-  // }
 }
 
 export default Entity;
