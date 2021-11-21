@@ -1,9 +1,9 @@
 import { IComponent } from "./IComponent";
-import { IUpdate } from "./IUpdate";
+import { IAwake, IUpdate } from "@/utils";
 
 export type Constr<T> = { new (...args: unknown[]): T };
 
-export interface IEntity extends IUpdate {
+export interface IEntity extends IAwake, IUpdate {
   id: string;
   Components: IComponent[];
   AddComponent(component: IComponent): void;

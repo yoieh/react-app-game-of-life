@@ -38,6 +38,10 @@ export abstract class Entity implements IEntity {
     return this.components.find((c) => c instanceof constr) !== undefined;
   }
 
+  public Awake(): void {
+    this.components.forEach((c) => c.Awake());
+  }
+
   public Update(deltaTime: number): void {
     this.components.forEach((c) => c.Update(deltaTime));
   }
