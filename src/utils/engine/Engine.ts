@@ -1,21 +1,18 @@
-import { Entity } from "../ecs";
+import { System } from "../ecs/System";
+import { IAwake, IUpdate } from "../lifecycle/ILifecycle";
 
-export class Engine extends Entity {
+export class Engine implements IAwake, IUpdate {
   private lastTimestamp = 0;
 
-  public Entities: Entity[] = [];
+  public Systems: System[] = [];
 
   constructor() {
-    super();
     // start update loop
     this.Update();
   }
 
   public Awake(): void {
-    super.Awake();
-
     // awake all children
-    this.Entities.forEach((entity) => entity.Awake());
 
     // Make sure Update starts after all entities are awaken
     requestAnimationFrame(() => {
@@ -28,13 +25,13 @@ export class Engine extends Entity {
   }
 
   public Update(): void {
-    const deltaTime = (Date.now() - this.lastTimestamp) / 1000;
+    // const deltaTime = (Date.now() - this.lastTimestamp) / 1000;
 
     // update all components
-    super.Update(deltaTime);
+    // super.Update(deltaTime);
 
     // update all children
-    this.Entities.forEach((entity) => entity.Update(deltaTime));
+    this.Systems.forEach((system) => system.OnUpdate());
 
     // update the timestamp
     this.lastTimestamp = Date.now();

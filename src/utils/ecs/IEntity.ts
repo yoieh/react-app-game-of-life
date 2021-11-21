@@ -1,8 +1,7 @@
 import { IComponent, Constr } from ".";
-import { IAwake, IUpdate } from "../lifecycle";
 
-export interface IEntity extends IAwake, IUpdate {
-  id: string;
+export interface IEntity {
+  id: number;
   Components: IComponent[];
   AddComponent(component: IComponent): void;
   GetComponent<C extends IComponent>(constr: Constr<C>): C;

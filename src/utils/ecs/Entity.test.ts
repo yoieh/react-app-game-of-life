@@ -6,7 +6,7 @@ import { Entity, IComponent } from ".";
 
 class E extends Entity {}
 class C1 implements IComponent {
-  public Entity: E = new E();
+  public Entity: E = new E(1);
 
   public Awake(): void {
     /* ... */
@@ -17,7 +17,7 @@ class C1 implements IComponent {
   }
 }
 class C2 implements IComponent {
-  public Entity: E = new E();
+  public Entity: E = new E(2);
 
   public Awake(): void {
     /* ... */
@@ -28,7 +28,7 @@ class C2 implements IComponent {
   }
 }
 class C3 implements IComponent {
-  public Entity: E = new E();
+  public Entity: E = new E(3);
 
   public Awake(): void {
     /* ... */
@@ -46,7 +46,7 @@ describe(">>> Entity", () => {
   const c3 = new C3();
 
   beforeEach(() => {
-    e = new E();
+    e = new E(4);
   });
 
   it("should add, remove, get, and check components", () => {
@@ -75,46 +75,5 @@ describe(">>> Entity", () => {
   it("should throw error if component wasn't found", () => {
     expect(e.HasComponent(C1)).toBeFalsy();
     expect(() => e.GetComponent(C1)).toThrow();
-  });
-
-  it("should awake all Components", () => {
-    const spy1 = jest.spyOn(c1, "Awake");
-    const spy2 = jest.spyOn(c2, "Awake");
-    const spy3 = jest.spyOn(c3, "Awake");
-
-    expect(spy1).not.toBeCalled();
-    expect(spy2).not.toBeCalled();
-    expect(spy3).not.toBeCalled();
-
-    e.AddComponent(c1);
-    e.AddComponent(c2);
-    e.AddComponent(c3);
-
-    e.Awake();
-
-    expect(spy1).toBeCalled();
-    expect(spy2).toBeCalled();
-    expect(spy3).toBeCalled();
-  });
-
-  it("should update all Components", () => {
-    const spy1 = jest.spyOn(c1, "Update");
-    const spy2 = jest.spyOn(c2, "Update");
-    const spy3 = jest.spyOn(c3, "Update");
-
-    expect(spy1).not.toBeCalled();
-    expect(spy2).not.toBeCalled();
-    expect(spy3).not.toBeCalled();
-
-    e.AddComponent(c1);
-    e.AddComponent(c2);
-    e.AddComponent(c3);
-
-    const deltaTime = 12;
-    e.Update(deltaTime);
-
-    expect(spy1).toBeCalledWith(deltaTime);
-    expect(spy2).toBeCalledWith(deltaTime);
-    expect(spy3).toBeCalledWith(deltaTime);
   });
 });

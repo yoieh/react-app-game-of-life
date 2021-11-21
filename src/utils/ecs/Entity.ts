@@ -1,7 +1,7 @@
 import { IComponent, Constr, IEntity } from ".";
 
-export abstract class Entity implements IEntity {
-  id: string = "";
+export class Entity implements IEntity {
+  id: number;
 
   protected components: IComponent[] = [];
 
@@ -9,7 +9,8 @@ export abstract class Entity implements IEntity {
     return this.components;
   }
 
-  constructor() {
+  constructor(entityId: number) {
+    this.id = entityId;
     this.components = [];
   }
 
@@ -37,13 +38,15 @@ export abstract class Entity implements IEntity {
     return this.components.find((c) => c instanceof constr) !== undefined;
   }
 
-  public Awake(): void {
-    this.components.forEach((c) => c.Awake());
-  }
+  // public Destroy(): void {}
 
-  public Update(deltaTime: number): void {
-    this.components.forEach((c) => c.Update(deltaTime));
-  }
+  // public Awake(): void {
+  //   this.components.forEach((c) => c.Awake());
+  // }
+
+  // public Update(deltaTime: number): void {
+  //   this.components.forEach((c) => c.Update(deltaTime));
+  // }
 }
 
 export default Entity;
