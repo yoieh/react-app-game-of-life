@@ -1,5 +1,6 @@
 import { IEntity } from "./IEntity";
+import { IUpdate } from "./IUpdate";
 
-export interface IComponent {
-  entity: IEntity | null;
+export interface IComponent extends IUpdate {
+  Entity: IEntity | null;
 }

@@ -1,6 +1,8 @@
 import { IComponent } from "./IComponent";
+import { ISystem } from "./ISystem";
+import { IEntity } from "../Engine/IEntity";
 
-export class System {
+export class BaseSystem implements ISystem {
   name: string;
 
   priority: any;
@@ -13,8 +15,8 @@ export class System {
     this.components = components;
   }
 
-  update(dt: any, entities: any) {
-    console.log(dt, entities, this.components);
+  update(delta: number, entities: IEntity[]) {
+    console.log(delta, entities, this.components);
     throw new Error("Method not implemented.");
   }
 }

@@ -1,12 +1,13 @@
 import { IComponent } from "./IComponent";
+import { IUpdate } from "./IUpdate";
 
-export interface IEntity {
+export type Constr<T> = { new (...args: unknown[]): T };
+
+export interface IEntity extends IUpdate {
   id: string;
-  name: string;
-  components: IComponent[];
-  addComponent(component: IComponent): void;
-  removeComponent(component: IComponent): void;
-  hasComponent(component: IComponent): boolean;
-  getComponent(component: IComponent): IComponent | undefined;
-  getComponents(component: IComponent): IComponent[];
+  Components: IComponent[];
+  AddComponent(component: IComponent): void;
+  GetComponent<C extends IComponent>(constr: Constr<C>): C;
+  RemoveComponent<C extends IComponent>(constr: Constr<C>): void;
+  HasComponent<C extends IComponent>(constr: Constr<C>): boolean;
 }
