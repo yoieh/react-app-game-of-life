@@ -8,33 +8,33 @@ class E extends Entity {}
 class C1 implements IComponent {
   public Entity: E = new E();
 
-  public Update(_deltaTime: number): void {
+  public Awake(): void {
     /* ... */
   }
 
-  public Awake(): void {
+  public Update(_deltaTime: number): void {
     /* ... */
   }
 }
 class C2 implements IComponent {
   public Entity: E = new E();
 
-  public Update(_deltaTime: number): void {
+  public Awake(): void {
     /* ... */
   }
 
-  public Awake(): void {
+  public Update(_deltaTime: number): void {
     /* ... */
   }
 }
 class C3 implements IComponent {
   public Entity: E = new E();
 
-  public Update(_deltaTime: number): void {
+  public Awake(): void {
     /* ... */
   }
 
-  public Awake(): void {
+  public Update(_deltaTime: number): void {
     /* ... */
   }
 }
@@ -75,6 +75,26 @@ describe(">>> Entity", () => {
   it("should throw error if component wasn't found", () => {
     expect(e.HasComponent(C1)).toBeFalsy();
     expect(() => e.GetComponent(C1)).toThrow();
+  });
+
+  it("should awake all Components", () => {
+    const spy1 = jest.spyOn(c1, "Awake");
+    const spy2 = jest.spyOn(c2, "Awake");
+    const spy3 = jest.spyOn(c3, "Awake");
+
+    expect(spy1).not.toBeCalled();
+    expect(spy2).not.toBeCalled();
+    expect(spy3).not.toBeCalled();
+
+    e.AddComponent(c1);
+    e.AddComponent(c2);
+    e.AddComponent(c3);
+
+    e.Awake();
+
+    expect(spy1).toBeCalled();
+    expect(spy2).toBeCalled();
+    expect(spy3).toBeCalled();
   });
 
   it("should update all Components", () => {
