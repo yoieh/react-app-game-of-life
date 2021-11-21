@@ -33,6 +33,7 @@
   "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
     "func-names": "off",
-    "no-param-reassign": ["off", { "extensions": [".js", ".ts"] }]
+    "no-param-reassign": ["off", { "extensions": [".js", ".ts"] }],
+    "import/no-cycle": "off"
   }
 }

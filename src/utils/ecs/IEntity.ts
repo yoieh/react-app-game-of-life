@@ -1,7 +1,5 @@
-import { IComponent } from "./IComponent";
-import { IAwake, IUpdate } from "@/utils";
-
-export type Constr<T> = { new (...args: unknown[]): T };
+import { IComponent, Constr } from "@/utils/ecs";
+import { IAwake, IUpdate } from "@/utils/lifecycle";
 
 export interface IEntity extends IAwake, IUpdate {
   id: string;

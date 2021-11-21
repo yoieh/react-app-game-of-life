@@ -1,4 +1,4 @@
-import { Entity } from "../ecs/Entity";
+import { Entity } from "@/utils";
 
 class Engine extends Entity {
   private lastTimestamp = 0;

@@ -1,14 +1,18 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-classes-per-file */
-import { Entity } from "./Entity";
-import { IComponent } from "./IComponent";
+
+import { Entity, IComponent } from "@/utils/ecs";
 
 class E extends Entity {}
 class C1 implements IComponent {
   public Entity: E = new E();
 
   public Update(_deltaTime: number): void {
+    /* ... */
+  }
+
+  public Awake(): void {
     /* ... */
   }
 }
@@ -18,11 +22,19 @@ class C2 implements IComponent {
   public Update(_deltaTime: number): void {
     /* ... */
   }
+
+  public Awake(): void {
+    /* ... */
+  }
 }
 class C3 implements IComponent {
   public Entity: E = new E();
 
   public Update(_deltaTime: number): void {
+    /* ... */
+  }
+
+  public Awake(): void {
     /* ... */
   }
 }
