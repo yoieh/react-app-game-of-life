@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-classes-per-file */
 
-import { Entity, IComponent } from "@/utils/ecs";
+import { Entity, IComponent } from ".";
 
 class E extends Entity {}
 class C1 implements IComponent {

@@ -1,5 +1,5 @@
-import { IComponent, Constr } from "@/utils/ecs";
-import { IAwake, IUpdate } from "@/utils/lifecycle";
+import { IComponent, Constr } from ".";
+import { IAwake, IUpdate } from "../lifecycle";
 
 export interface IEntity extends IAwake, IUpdate {
   id: string;

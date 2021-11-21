@@ -4,6 +4,9 @@ import "./App.css";
 
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
+import { Engine } from "./utils";
+
+new Engine().Awake();
 
 const App: React.FC = function () {
   return (

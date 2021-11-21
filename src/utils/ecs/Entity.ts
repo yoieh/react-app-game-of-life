@@ -1,4 +1,4 @@
-import { IComponent, Constr, IEntity } from "@/utils/ecs";
+import { IComponent, Constr, IEntity } from ".";
 
 export abstract class Entity implements IEntity {
   id: string = "";
