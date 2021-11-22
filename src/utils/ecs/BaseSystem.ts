@@ -17,7 +17,9 @@ export abstract class BaseSystem {
 
   public OnCreate(deltaTime: number) {}
 
-  public OnUpdate(deltaTime: number) {}
+  public OnUpdate(deltaTime: number) {
+    console.log(`OnUpdate BaseSystem ${deltaTime}`);
+  }
 
   public OnDestroy(deltaTime: number) {}
 }

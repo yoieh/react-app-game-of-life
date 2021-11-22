@@ -3,6 +3,8 @@ import { IAwake, IUpdate } from "../lifecycle/ILifecycle";
 import { EntityManager } from "../ecs/EntityManager";
 
 export class Engine implements IAwake, IUpdate {
+  private stopUpdate: boolean = false;
+
   private static instance: Engine;
 
   public static get Instance(): Engine {
@@ -39,37 +41,71 @@ export class Engine implements IAwake, IUpdate {
   public Update(): void {
     const deltaTime = (Date.now() - this.lastTimestamp) / 1000;
 
+    if (this.stopUpdate) {
+      console.log(`${this.constructor.name} stoped`);
+      return;
+    }
+
+    const update = (system: BaseSystem) => {
+      system.OnUpdate(deltaTime);
+    };
+
     // update all children
 
     // before update
-    this.Systems.filter((s) => s.beforeUpdate).forEach((system) =>
-      system.OnUpdate(deltaTime),
-    );
-
+    const toBeforeUpadte = this.Systems.filter((s) => s.beforeUpdate);
     // update
-    this.Systems.filter(
+    const toUpadte = this.Systems.filter(
       (s) => !s.afterUpdate && !s.beforeUpdate && !s.afterUpdate,
-    ).forEach((system) => system.OnUpdate(deltaTime));
-
+    );
     // after update
-    this.Systems.filter((s) => s.afterUpdate).forEach((system) =>
-      system.OnUpdate(deltaTime),
-    );
-
+    const toAfterUpdate = this.Systems.filter((s) => s.afterUpdate);
     // last update
-    this.Systems.filter((s) => s.lastUpdate).forEach((system) =>
-      system.OnUpdate(deltaTime),
-    );
+    const toLastUpdate = this.Systems.filter((s) => s.lastUpdate);
 
     // update the timestamp
-    this.lastTimestamp = Date.now();
 
-    // Invoke on next frame
-    requestAnimationFrame(() => this.Update());
+    try {
+      toUpadte.forEach(update);
+
+      toBeforeUpadte.forEach(update);
+
+      toAfterUpdate.forEach(update);
+
+      toLastUpdate.forEach(update);
+
+      this.lastTimestamp = Date.now();
+
+      // Invoke on next frame
+      requestAnimationFrame(() => this.Update());
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
+    }
   }
 
   public RegisterSystem(system: BaseSystem): void {
+    console.log(`Register: ${system.constructor.name}`);
     this.Systems.push(system);
+  }
+
+  public UnregisterSystem(system: BaseSystem): void {
+    console.log(`Unregister: ${system.constructor.name}`);
+    this.Systems = this.Systems.filter((s) => s !== system);
+  }
+
+  public Stop() {
+    console.log(`Stopping ${this.constructor.name}...`);
+    this.Destroy();
+  }
+
+  public Destroy() {
+    Engine.Instance.stopUpdate = true;
+
+    this.Systems.forEach((system) => {
+      this.UnregisterSystem(system);
+    });
   }
 }
 
