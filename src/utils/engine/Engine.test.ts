@@ -2,14 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-classes-per-file */
 
+import { BaseSystem } from "../ecs/BaseSystem";
 import { Engine } from "./Engine";
-import { Entity, IComponent } from "../ecs";
+
+class S extends BaseSystem {}
 
 describe(">>> Engine", () => {
   let engine: Engine;
 
   beforeEach(() => {
-    engine = new Engine();
+    engine = Engine.Instance;
 
     window.requestAnimationFrame = jest
       .fn()
@@ -22,5 +24,11 @@ describe(">>> Engine", () => {
     engine.Awake();
 
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should register a new system", () => {
+    const s = new S();
+
+    expect(engine.Systems.length).toBe(1);
   });
 });
