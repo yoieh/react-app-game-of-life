@@ -1,7 +1,12 @@
-import { Entity, IEntity } from ".";
+import { IEntity } from ".";
+import { Signal } from "../signal/Signal";
 
 export class EntityManager {
   private static instance: EntityManager;
+
+  public onEntityAdded = new Signal();
+
+  public onEntityRemoved = new Signal();
 
   public static get Instance(): EntityManager {
     if (!EntityManager.instance) {
@@ -16,18 +21,11 @@ export class EntityManager {
     return this.entities;
   }
 
-  entityId: number;
+  public entityId: number;
 
   constructor() {
     this.entities = [];
     this.entityId = 0;
-  }
-
-  CreateEntity() {
-    const entity = new Entity(this.entityId);
-    this.entities.push(entity);
-    this.entityId += 1;
-    return entity;
   }
 
   GetEntity(id: number) {
@@ -38,11 +36,19 @@ export class EntityManager {
     return this.entities;
   }
 
+  AddEntity(entity: IEntity) {
+    this.entities.push(entity);
+    this.entityId += 1;
+    this.onEntityAdded.dispatch(entity);
+    return entity;
+  }
+
   RemoveEntity(id: number) {
     const entity = this.GetEntity(id);
     if (entity) {
       //   entity.remove();
       this.entities = this.entities.filter((e) => e.id !== id);
+      this.onEntityRemoved.dispatch(entity);
     }
   }
 }

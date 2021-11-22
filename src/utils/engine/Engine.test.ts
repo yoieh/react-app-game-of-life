@@ -18,13 +18,14 @@ describe(">>> Engine", () => {
       .mockImplementationOnce((cb) => cb()); // <-- ADD
   });
 
-  it("should start update loop next frame after awake", () => {
-    const spy = jest.spyOn(engine, "Update");
+  // awake dosent exist in the engine anymore
+  // it("should start update loop next frame after awake", () => {
+  //   const spy = jest.spyOn(engine, "Update");
 
-    engine.Awake();
+  //   engine.Awake();
 
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
+  //   expect(spy).toHaveBeenCalledTimes(1);
+  // });
 
   it("should register a new system", () => {
     const s = new S();

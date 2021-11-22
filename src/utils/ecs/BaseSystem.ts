@@ -5,11 +5,7 @@ import { Engine } from "../engine/Engine";
 export abstract class BaseSystem {
   EntityManager: EntityManager = EntityManager.Instance;
 
-  public beforeUpdate: boolean = false;
-
-  public afterUpdate: boolean = false;
-
-  public lastUpdate: boolean = false;
+  public enabled: boolean = true;
 
   constructor() {
     Engine.Instance.RegisterSystem(this);
