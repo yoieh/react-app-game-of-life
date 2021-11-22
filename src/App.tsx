@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 // import logo from './logo.svg';
-import "./App.css";
+import "@/App.css";
 
-import { UIBottom } from "./UI/UIBottom";
-import { UITop } from "./UI/UITop";
-import { Engine } from "./utils";
-import { BaseSystem } from "./utils/ecs/BaseSystem";
+import { UIBottom } from "@/UI/UIBottom";
+import { UITop } from "@/UI/UITop";
+import { Engine } from "@/utils";
+import { BaseSystem } from "@/utils/ecs/BaseSystem";
 
 class TestSystem extends BaseSystem {
   public OnUpdate() {
