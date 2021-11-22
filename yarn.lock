@@ -2538,6 +2538,11 @@
   resolved "https://registry.npmjs.org/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
+"@yoieh/signal@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@yoieh/signal/-/signal-0.0.4.tgz#174c914780bdf1a9a23c086a20a04b6b1ffe250c"
+  integrity sha512-Zr0/CITuzN5KW2UJWvClFzp3fHI1elvgezxUwprI3EKIeVzoFAAzzMPTEp2cYPVqv62Iqgw2Bc0tIyITBiqNCg==
+
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npmjs.org/abab/-/abab-2.0.5.tgz"

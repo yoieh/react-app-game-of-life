@@ -1,6 +1,5 @@
+import { Signal } from "@yoieh/signal";
 import { IEntity } from ".";
-import { Signal } from "../signal/Signal";
-
 export class EntityManager {
   private static instance: EntityManager;
 
