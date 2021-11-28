@@ -2516,10 +2516,10 @@
   resolved "https://registry.npmjs.org/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
-"@yoieh/ecs-core@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@yoieh/ecs-core/-/ecs-core-0.0.8.tgz#017b509d2eca5e8fe5cecccc90d42505ec7e89bd"
-  integrity sha512-kvNxL5KW+MytUARDuALdNUwtVZ2IQgftUnuoHDNZBHEPf0msd+ubW8UcHPc2oF6uI1vqzRVXmA/8yQtQP4fvfg==
+"@yoieh/ecs-core@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@yoieh/ecs-core/-/ecs-core-0.0.9.tgz#f3afb89d9fcc72c762ad27fbc29d2e2aa8058bbc"
+  integrity sha512-CtwhLZFl1ahiybIpBdIS1F0yoGdRWIHNJIAhGUskRCNmAOEWCqEF6jzX/43zuOPdJLtd5KXKsNY1pSXWcdWVXw==
   dependencies:
     "@yoieh/signal" "0.0.15"
     tslib "^2.3.1"
