@@ -4,33 +4,23 @@ import { PositionComponent } from "../components/PositionComponent";
 import { CanvasComponent } from "../components/CanvasComponent";
 
 export class DrawCellsSystem extends BaseSystem {
-  public q: Query;
+  public q: Query = new Query(
+    (entity: IEntity) =>
+      entity.has(PositionComponent) && entity.has(CellComponent),
+  );
 
-  private canvasQuery: Query;
-
-  public constructor() {
-    super();
-
-    this.q = new Query(
-      (entity: IEntity) =>
-        entity.has(PositionComponent) && entity.has(CellComponent),
-    );
-    this.canvasQuery = new Query((entity: IEntity) =>
-      entity.has(CanvasComponent),
-    );
-  }
+  private canvasQuery: Query = new Query((entity: IEntity) =>
+    entity.has(CanvasComponent),
+  );
 
   public onUpdate(): void {
-    const entities = this.q.filter(this.entityManager.entities);
-    const canvasEntities = this.canvasQuery.filter(this.entityManager.entities);
-
-    const canvas = this.canvasQuery.find(canvasEntities);
+    const canvas = this.canvasQuery.find();
 
     if (!canvas) {
       return;
     }
 
-    this.q.foreach(entities, (entity: IEntity) => {
+    this.q.foreach((entity: IEntity) => {
       // console.log(entity.get(TimeComponent).Value)
       const position = entity.get(PositionComponent);
       const cell = entity.get(CellComponent);

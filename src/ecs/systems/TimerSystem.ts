@@ -11,11 +11,9 @@ export class TimerSystem extends BaseSystem {
   }
 
   public onUpdate(delta: number): void {
-    const entities = this.q.filter(this.entityManager.entities);
-
     // console.log(EntityManager.instance.getEntities(), this.entityManager.entities, entities.length);
 
-    this.q.foreach(entities, (entity: IEntity) => {
+    this.q.foreach((entity: IEntity) => {
       // console.log(entity.get(TimeComponent).Value)
       const timeComponent = entity.get(TimeComponent);
       timeComponent.Value = delta + 1;

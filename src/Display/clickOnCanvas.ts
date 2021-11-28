@@ -1,7 +1,7 @@
 import React from "react";
 import { EntityManager } from "@yoieh/ecs-core";
 import { PositionComponent } from "../ecs/components/PositionComponent";
-import { CellComponent } from "../ecs/components/CellComponent";
+import { ActivateCellComponent } from "../ecs/components/ActivateCellComponent";
 
 const getPositionFromEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
   const rect = event.currentTarget.getBoundingClientRect();
@@ -23,7 +23,7 @@ export const clickOnCanvas = (
     const entity = EntityManager.instance.createEntity();
 
     entity.add(new PositionComponent(x, y));
-    entity.add(new CellComponent(1));
+    entity.add(new ActivateCellComponent());
 
     EntityManager.instance.addEntity(entity);
   }

@@ -11,30 +11,36 @@ import { TimerSystem } from "./ecs/systems/TimerSystem";
 import { useAnimationFrame } from "./hooks/useAnimationFrame";
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
+import { GridComponent } from "./ecs/components/GridComponent";
+import { GridSystem } from "./ecs/systems/GridSystem";
+import { ClearCanvasSystem } from "./ecs/systems/ClearCanvasSystem";
+import { ResolveCellPositionSystem } from "./ecs/systems/ResolveCellPositionSystem";
 
 const init = () => {
-  new TimerSystem();
-  new DrawCellsSystem();
-
   const time = EntityManager.instance.createEntity();
   time.add(new TimeComponent());
 
-  EntityManager.instance.addEntity(time);
-
   const grid = EntityManager.instance.createEntity();
-  grid.add(new TimeComponent());
+  grid.add(new GridComponent(500, 500, 10));
+
+  // create systems after adding entities
+  Engine.instance.createSystem(TimerSystem);
+  Engine.instance.createSystem(ClearCanvasSystem);
+  Engine.instance.createSystem(GridSystem);
+  Engine.instance.createSystem(ResolveCellPositionSystem);
+  Engine.instance.createSystem(DrawCellsSystem);
 };
 
-const update = (dt: number) => {
-  Engine.instance.update(dt);
+const run = (dt: number) => {
+  Engine.instance.tick(dt);
 };
 
 const App: React.FC = function () {
+  useAnimationFrame(run);
+
   useEffect(() => {
     init();
   }, []);
-
-  useAnimationFrame(update);
 
   return (
     <div className="App">
