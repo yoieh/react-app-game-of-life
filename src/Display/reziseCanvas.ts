@@ -1,8 +1,6 @@
-import Engine from "../Engine/Engine";
-
-export const reziseCanvas = (engine: Engine) => {
-  engine.Width = window.innerWidth;
-  engine.Height = window.innerHeight;
+export const reziseCanvas = (canvas: HTMLCanvasElement) => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 };
 
 export default reziseCanvas;

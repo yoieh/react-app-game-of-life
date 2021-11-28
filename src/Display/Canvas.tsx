@@ -1,49 +1,33 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
-import Grid from "../Grid/Grid";
 import { reziseCanvas } from "./reziseCanvas";
-import Engine from "../Engine/Engine";
 
-interface CanvasProps {
-  setRef: (node: HTMLCanvasElement) => void;
-  grid: Grid<boolean>;
-  engine: Engine;
-}
+interface CanvasProps {}
 
-export const Canvas: React.FC<CanvasProps> = function ({
-  setRef,
-  grid,
-  engine,
-}) {
-  const handleContextMenu = useCallback(
-    (event) => {
-      leftClickOnCanvas(event, grid);
-    },
-    [grid],
-  );
+export const Canvas: React.FC<CanvasProps> = function () {
+  const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = engine?.getCanvas();
-    canvas?.addEventListener("contextmenu", handleContextMenu);
-    return () => {
-      canvas?.removeEventListener("contextmenu", handleContextMenu);
-    };
-  }, [engine, handleContextMenu]);
+  const handleContextMenu = useCallback((event) => {
+    leftClickOnCanvas(event);
+  }, []);
 
-  useEffect(() => {
-    console.log("engine", engine);
+  // useEffect(() => {
+  //   const canvas = engine?.getCanvas();
+  //   canvas?.addEventListener("contextmenu", handleContextMenu);
+  //   return () => {
+  //     canvas?.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, [engine, handleContextMenu]);
 
-    if (engine) reziseCanvas(engine);
-  }, [engine]);
+  // useEffect(() => {
+  //   console.log("engine", engine);
 
-  return (
-    <canvas
-      ref={(node) => node && setRef(node)}
-      onClick={(e) => clickOnCanvas(e, grid, engine.EntityManager)}
-    />
-  );
+  //   if (engine) reziseCanvas(engine);
+  // }, [engine]);
+
+  return <canvas ref={canvasRef} onClick={(e) => clickOnCanvas(e)} />;
 };
 
 export default Canvas;
