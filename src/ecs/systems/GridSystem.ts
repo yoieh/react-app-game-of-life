@@ -1,5 +1,6 @@
 import { BaseSystem, Engine, IEntity, Query } from "@yoieh/ecs-core";
 import { CanvasComponent } from "../components/CanvasComponent";
+import { CellComponent } from "../components/CellComponent";
 import { GridComponent } from "../components/GridComponent";
 // import { NeighborsComponent } from "../components/NeighborsComponent";
 import { PositionComponent } from "../components/PositionComponent";
@@ -51,7 +52,11 @@ export class GridSystem extends BaseSystem {
         y += 1
       ) {
         const cell = this.entityManager.createEntity();
+
+        // snap to grid
+
         cell.add(new PositionComponent(x, y));
+        cell.add(new CellComponent());
         // need a whay to find all the neighbors
         // cell.add(
         //   new NeighborsComponent(

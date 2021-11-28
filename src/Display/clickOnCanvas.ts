@@ -20,12 +20,12 @@ export const clickOnCanvas = (
   if (context) {
     const { x, y } = getPositionFromEvent(event);
 
+    console.log(`click @ { x: ${x}, y: ${y} }`);
+
     const entity = EntityManager.instance.createEntity();
 
     entity.add(new PositionComponent(x, y));
     entity.add(new ActivateCellComponent());
-
-    EntityManager.instance.addEntity(entity);
   }
 };
 
