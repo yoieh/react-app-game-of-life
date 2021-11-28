@@ -1,5 +1,5 @@
 /* eslint-disable no-new */
-import { Entity, Engine, EntityManager } from "@yoieh/ecs-core";
+import { Engine, EntityManager } from "@yoieh/ecs-core";
 import React, { useEffect } from "react";
 // import logo from './logo.svg';
 import "./App.css";
@@ -16,10 +16,13 @@ const init = () => {
   new TimerSystem();
   new DrawCellsSystem();
 
-  const e = new Entity(1);
-  e.add(new TimeComponent());
+  const time = EntityManager.instance.createEntity();
+  time.add(new TimeComponent());
 
-  EntityManager.instance.addEntity(e);
+  EntityManager.instance.addEntity(time);
+
+  const grid = EntityManager.instance.createEntity();
+  grid.add(new TimeComponent());
 };
 
 const update = (dt: number) => {

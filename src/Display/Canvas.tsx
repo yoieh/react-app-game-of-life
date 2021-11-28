@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Entity, EntityManager } from "@yoieh/ecs-core";
+import { EntityManager } from "@yoieh/ecs-core";
 
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
@@ -9,7 +9,7 @@ import { CanvasComponent } from "../ecs/components/CanvasComponent";
 interface CanvasProps {}
 
 const addContextEntity = (context: CanvasRenderingContext2D) => {
-  const entity = new Entity(1);
+  const entity = EntityManager.instance.createEntity();
 
   entity.add(new CanvasComponent(context));
 

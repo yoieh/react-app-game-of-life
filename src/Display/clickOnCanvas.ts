@@ -1,5 +1,5 @@
 import React from "react";
-import { Entity, EntityManager } from "@yoieh/ecs-core";
+import { EntityManager } from "@yoieh/ecs-core";
 import { PositionComponent } from "../ecs/components/PositionComponent";
 import { CellComponent } from "../ecs/components/CellComponent";
 
@@ -20,7 +20,7 @@ export const clickOnCanvas = (
   if (context) {
     const { x, y } = getPositionFromEvent(event);
 
-    const entity = new Entity(1);
+    const entity = EntityManager.instance.createEntity();
 
     entity.add(new PositionComponent(x, y));
     entity.add(new CellComponent(1));
