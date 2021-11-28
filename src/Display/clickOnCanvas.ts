@@ -1,4 +1,14 @@
 import React from "react";
+import { Entity, EntityManager } from "@yoieh/ecs-core";
+import { PositionComponent } from "../ecs/components/PositionComponent";
+import { CellComponent } from "../ecs/components/CellComponent";
+
+const getPositionFromEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  return { x, y };
+};
 
 export const clickOnCanvas = (
   event: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
@@ -8,12 +18,14 @@ export const clickOnCanvas = (
   const context = canvas.getContext("2d");
 
   if (context) {
-    // const position = grid.getPositionFromEvent(event);
-    // const cell = grid.getCell(position.x, position.y);
-    // if (cell) entityManager.addEntity(cell);
-    // if (cell?.isEmpty()) {
-    //   cell.setValue(!cell.Value);
-    // }
+    const { x, y } = getPositionFromEvent(event);
+
+    const entity = new Entity(1);
+
+    entity.add(new PositionComponent(x, y));
+    entity.add(new CellComponent(1));
+
+    EntityManager.instance.addEntity(entity);
   }
 };
 
