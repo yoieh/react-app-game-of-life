@@ -5,13 +5,14 @@ export class NeighborsComponent implements IComponent {
   // nw, n, ne, e, se, s, sw, w
   constructor(
     public RefCell: IEntity,
-    public nw: IEntity,
-    public n: IEntity,
-    public ne: IEntity,
-    public e: IEntity,
-    public se: IEntity,
-    public sw: IEntity,
-    public w: IEntity,
+    public nw: IEntity | null = null,
+    public n: IEntity | null = null,
+    public ne: IEntity | null = null,
+    public e: IEntity | null = null,
+    public se: IEntity | null = null,
+    public s: IEntity | null = null,
+    public sw: IEntity | null = null,
+    public w: IEntity | null = null,
   ) {}
 }
 
