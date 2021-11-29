@@ -16,6 +16,7 @@ import { GridSystem } from "./ecs/systems/GridSystem";
 import { ClearCanvasSystem } from "./ecs/systems/ClearCanvasSystem";
 import { ResolveCellActivationSystem } from "./ecs/systems/ResolveCellActivationSystem";
 import { ResolveCellDeActivationSystem } from "./ecs/systems/ResolveCellDeActivationSystem";
+import { SimpleAutomataSystem } from "./ecs/systems/SimpleAutomataSystem";
 
 const init = () => {
   const time = EntityManager.instance.createEntity();
@@ -28,8 +29,11 @@ const init = () => {
   Engine.instance.createSystem(TimerSystem);
   Engine.instance.createSystem(ClearCanvasSystem);
   Engine.instance.createSystem(GridSystem);
+
   Engine.instance.createSystem(ResolveCellActivationSystem);
   Engine.instance.createSystem(ResolveCellDeActivationSystem);
+
+  Engine.instance.createSystem(SimpleAutomataSystem);
 
   Engine.instance.createSystem(DrawCellsSystem);
 };
