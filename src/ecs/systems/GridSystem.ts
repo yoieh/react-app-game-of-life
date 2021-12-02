@@ -59,78 +59,89 @@ export class GridSystem extends BaseSystem {
         cell.add(new PositionComponent(x, y));
         cell.add(new CellComponent());
 
-        // find all neighbors for this cell
-        const nwCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x - 1 &&
-            entity.get(PositionComponent).Y === y - 1,
-        ).find();
-
-        const nCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x &&
-            entity.get(PositionComponent).Y === y - 1,
-        ).find();
-
-        const neCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x + 1 &&
-            entity.get(PositionComponent).Y === y - 1,
-        ).find();
-
-        const eCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x + 1 &&
-            entity.get(PositionComponent).Y === y,
-        ).find();
-
-        const seCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x + 1 &&
-            entity.get(PositionComponent).Y === y + 1,
-        ).find();
-
-        const sCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x &&
-            entity.get(PositionComponent).Y === y + 1,
-        ).find();
-
-        const swCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x - 1 &&
-            entity.get(PositionComponent).Y === y + 1,
-        ).find();
-
-        const wCell = new Query(
-          (entity: IEntity) =>
-            entity.has(PositionComponent) &&
-            entity.get(PositionComponent).X === x - 1 &&
-            entity.get(PositionComponent).Y === y,
-        ).find();
-
-        cell.add(
-          new NeighborsComponent(
-            cell,
-            nwCell,
-            nCell,
-            neCell,
-            eCell,
-            seCell,
-            sCell,
-            swCell,
-            wCell,
-          ),
-        );
+        // needs to be done after this is this nesed loop....
       }
     }
+
+    new Query(
+      (e: IEntity) =>
+        e.has(PositionComponent) &&
+        e.has(CellComponent) &&
+        !e.has(NeighborsComponent),
+    ).foreach((cEntity: IEntity) => {
+      const { X, Y } = cEntity.get(PositionComponent);
+
+      // find all neighbors for this cell
+      const nwCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X - 1 &&
+          entity.get(PositionComponent).Y === Y - 1,
+      ).find();
+
+      const nCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X &&
+          entity.get(PositionComponent).Y === Y - 1,
+      ).find();
+
+      const neCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X + 1 &&
+          entity.get(PositionComponent).Y === Y - 1,
+      ).find();
+
+      const eCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X + 1 &&
+          entity.get(PositionComponent).Y === Y,
+      ).find();
+
+      const seCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X + 1 &&
+          entity.get(PositionComponent).Y === Y + 1,
+      ).find();
+
+      const sCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X &&
+          entity.get(PositionComponent).Y === Y + 1,
+      ).find();
+
+      const swCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X - 1 &&
+          entity.get(PositionComponent).Y === Y + 1,
+      ).find();
+
+      const wCell = new Query(
+        (entity: IEntity) =>
+          entity.has(PositionComponent) &&
+          entity.get(PositionComponent).X === X - 1 &&
+          entity.get(PositionComponent).Y === Y,
+      ).find();
+
+      cEntity.add(
+        new NeighborsComponent(
+          cEntity,
+          nwCell,
+          nCell,
+          neCell,
+          eCell,
+          seCell,
+          sCell,
+          swCell,
+          wCell,
+        ),
+      );
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
