@@ -1,49 +1,51 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+import { EntityManager } from "@yoieh/ecs-core";
 
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
-import Grid from "../Grid/Grid";
 import { reziseCanvas } from "./reziseCanvas";
-import Engine from "../Engine/Engine";
+import { CanvasComponent } from "../ecs/components/CanvasComponent";
 
-interface CanvasProps {
-  setRef: (node: HTMLCanvasElement) => void;
-  grid: Grid<boolean>;
-  engine: Engine;
-}
+interface CanvasProps {}
 
-export const Canvas: React.FC<CanvasProps> = function ({
-  setRef,
-  grid,
-  engine,
-}) {
-  const handleContextMenu = useCallback(
-    (event) => {
-      leftClickOnCanvas(event, grid);
-    },
-    [grid],
-  );
+const addContextEntity = (context: CanvasRenderingContext2D) => {
+  const entity = EntityManager.instance.createEntity();
+
+  entity.add(new CanvasComponent(context));
+
+  EntityManager.instance.addEntity(entity);
+};
+
+export const Canvas: React.FC<CanvasProps> = function () {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const handleContextMenu = useCallback((event) => {
+    leftClickOnCanvas(event);
+  }, []);
 
   useEffect(() => {
-    const canvas = engine?.getCanvas();
+    const canvas = canvasRef.current;
     canvas?.addEventListener("contextmenu", handleContextMenu);
     return () => {
       canvas?.removeEventListener("contextmenu", handleContextMenu);
     };
-  }, [engine, handleContextMenu]);
+  }, [canvasRef, handleContextMenu]);
 
   useEffect(() => {
-    console.log("engine", engine);
+    if (canvasRef.current !== null) {
+      reziseCanvas(canvasRef.current);
+    }
+  }, [canvasRef]);
 
-    if (engine) reziseCanvas(engine);
-  }, [engine]);
+  useEffect(() => {
+    const ctx = canvasRef.current?.getContext("2d");
 
-  return (
-    <canvas
-      ref={(node) => node && setRef(node)}
-      onClick={(e) => clickOnCanvas(e, grid, engine.EntityManager)}
-    />
-  );
+    if (ctx) {
+      addContextEntity(ctx);
+    }
+  }, []);
+
+  return <canvas ref={canvasRef} onClick={(e) => clickOnCanvas(e)} />;
 };
 
 export default Canvas;

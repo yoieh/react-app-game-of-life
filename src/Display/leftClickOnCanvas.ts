@@ -1,21 +1,31 @@
 import React from "react";
-import Grid from "../Grid/Grid";
+import { EntityManager } from "@yoieh/ecs-core";
+import { DeActivateCellComponent } from "../ecs/components/DeActivateCellComponent";
+import { PositionComponent } from "../ecs/components/PositionComponent";
+
+const getPositionFromEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  return { x, y };
+};
 
 export const leftClickOnCanvas = (
   event: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
-  grid: Grid<any>,
 ) => {
   event.preventDefault();
   const canvas = event.currentTarget;
   const context = canvas.getContext("2d");
 
   if (context) {
-    const position = grid.getPositionFromEvent(event);
-    const cell = grid.getCell(position.x, position.y);
+    const { x, y } = getPositionFromEvent(event);
 
-    if (cell && !cell.isEmpty()) {
-      cell.setValue(false);
-    }
+    console.log(`leftClick @ { x: ${x}, y: ${y} }`);
+
+    const entity = EntityManager.instance.createEntity();
+
+    entity.add(new PositionComponent(x, y));
+    entity.add(new DeActivateCellComponent());
   }
 };
 

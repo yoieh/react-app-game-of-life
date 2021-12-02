@@ -1,83 +1,57 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+/* eslint-disable no-new */
+import { Engine, EntityManager } from "@yoieh/ecs-core";
+import React, { useEffect } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 
 import { Canvas } from "./Display/Canvas";
-import Grid from "./Grid/Grid";
+import { TimeComponent } from "./ecs/components/TimeComponent";
+import { DrawCellsSystem } from "./ecs/systems/DrawCellsSystem";
+import { TimerSystem } from "./ecs/systems/TimerSystem";
+import { useAnimationFrame } from "./hooks/useAnimationFrame";
 import { UIBottom } from "./UI/UIBottom";
 import { UITop } from "./UI/UITop";
-import { useEngineRef } from "./hooks/useEngineRef";
-import Engine from "./Engine/Engine";
-import { IEntity } from "./Engine/IEntity";
-import EntityManager from "./Engine/EntityManager";
+import { GridComponent } from "./ecs/components/GridComponent";
+import { GridSystem } from "./ecs/systems/GridSystem";
+import { ClearCanvasSystem } from "./ecs/systems/ClearCanvasSystem";
+import { ResolveCellActivationSystem } from "./ecs/systems/ResolveCellActivationSystem";
+import { ResolveCellDeActivationSystem } from "./ecs/systems/ResolveCellDeActivationSystem";
+import { SimpleAutomataSystem } from "./ecs/systems/SimpleAutomataSystem";
 
-const useEntities = (engine: Engine) => {
-  const [entities, setEntities] = useState<IEntity[]>([]);
-  const [entityCount, setEntityCount] = useState<number>(0);
+const init = () => {
+  const time = EntityManager.instance.createEntity();
+  time.add(new TimeComponent());
 
-  if (engine && !engine.EntityManager) {
-    console.log("No EntityManager");
-    engine?.setEntityManager(new EntityManager());
-  }
+  const grid = EntityManager.instance.createEntity();
+  grid.add(new GridComponent(500, 500, 10));
 
-  const { EntityManager: entityManager } = engine;
+  // create systems after adding entities
+  Engine.instance.createSystem(TimerSystem);
+  Engine.instance.createSystem(ClearCanvasSystem);
+  Engine.instance.createSystem(GridSystem);
 
-  const addEntity = useCallback(
-    (entity: IEntity) => {
-      if (entityManager) {
-        setEntities([...entities, entity]);
-        setEntityCount(entityCount + 1);
+  Engine.instance.createSystem(ResolveCellActivationSystem);
+  Engine.instance.createSystem(ResolveCellDeActivationSystem);
 
-        console.log("HERE; ", engine?.EntityManager);
+  Engine.instance.createSystem(SimpleAutomataSystem);
 
-        entityManager?.addEntity(entity);
-      }
-    },
-    [engine?.EntityManager, entities, entityCount, entityManager],
-  );
+  Engine.instance.createSystem(DrawCellsSystem);
+};
 
-  const removeEntity = useCallback(
-    (entity: IEntity) => {
-      if (entityManager) {
-        setEntities(entities.filter((e) => e !== entity));
-        setEntityCount(entityCount - 1);
-
-        entityManager?.removeEntity(entity);
-      }
-    },
-    [entities, entityCount, entityManager],
-  );
-
-  return { entities, addEntity, removeEntity, entityCount };
+const run = (dt: number) => {
+  Engine.instance.tick(dt);
 };
 
 const App: React.FC = function () {
-  const { createEngine, engine } = useEngineRef();
-
-  const entityManager = useEntities(engine);
-
-  const grid = useMemo<Grid<boolean>>(() => {
-    const testGrid = new Grid<boolean>(100, 100, 10);
-
-    testGrid.generate();
-
-    return testGrid;
-  }, []);
+  useAnimationFrame(run);
 
   useEffect(() => {
-    if (entityManager?.entities.length <= 0) {
-      console.log("Creating entities");
-      entityManager.addEntity(grid);
-
-      // for (let index = 0; index < 10; index += 1) {
-      //   grid.getRandomCell()?.setValue(true);
-      // }
-    }
-  }, [grid, entityManager]);
+    init();
+  }, []);
 
   return (
     <div className="App">
-      <Canvas setRef={createEngine} engine={engine} {...{ grid }} />
+      <Canvas />
 
       <UITop />
       <UIBottom />
