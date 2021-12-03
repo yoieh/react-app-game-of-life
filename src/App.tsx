@@ -17,6 +17,7 @@ import { ClearCanvasSystem } from "./ecs/systems/ClearCanvasSystem";
 import { ResolveCellActivationSystem } from "./ecs/systems/ResolveCellActivationSystem";
 import { ResolveCellDeActivationSystem } from "./ecs/systems/ResolveCellDeActivationSystem";
 import { SimpleAutomataSystem } from "./ecs/systems/SimpleAutomataSystem";
+import { useRecursiveTimeout } from "./hooks/useRecursiveTimeout";
 
 const init = () => {
   const time = EntityManager.instance.createEntity();
@@ -42,8 +43,13 @@ const run = (dt: number) => {
   Engine.instance.tick(dt);
 };
 
+const render = () => {
+  Engine.instance.render();
+};
+
 const App: React.FC = function () {
-  useAnimationFrame(run);
+  useRecursiveTimeout(run, 0);
+  useAnimationFrame(render);
 
   useEffect(() => {
     init();

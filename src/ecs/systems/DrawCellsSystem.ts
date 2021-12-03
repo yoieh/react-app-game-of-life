@@ -19,7 +19,7 @@ export class DrawCellsSystem extends BaseSystem {
     entity.has(CanvasComponent),
   );
 
-  public onUpdate(): void {
+  public onRender(): void {
     const canvas = this.canvasQuery.find();
     const grid = this.gridQuery.find();
 

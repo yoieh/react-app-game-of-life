@@ -6,8 +6,9 @@ export const useAnimationFrame = (cb: (dt: number) => void) => {
 
   const animate = useCallback(
     (time: number) => {
-      const dt = (time - previousTimeRef.current) / 1000;
+      const dt = time - previousTimeRef.current;
       cb(dt);
+
       requestRef.current = requestAnimationFrame(animate);
       previousTimeRef.current = time;
     },
