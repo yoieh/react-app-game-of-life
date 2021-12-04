@@ -5,8 +5,8 @@ import "./App.css";
 import { Canvas } from "./Display/Canvas";
 import { useEngine } from "./hooks/useEngine";
 
-import { UIBottom } from "./UI/UIBottom";
-import { UITop } from "./UI/UITop";
+import { UIBottom } from "./components/UI/UIBottom";
+import { UITop } from "./components/UI/UITop";
 
 const App: React.FC = function () {
   useEngine();

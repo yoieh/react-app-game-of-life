@@ -1,0 +1,56 @@
+.ui {
+  flex: 1;
+  display: flex;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.top {
+  top: 0;
+  justify-content: space-between;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+button {
+  background-color: #00a0e9;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.5rem;
+  padding: 0.3rem;
+  cursor: pointer;
+
+  // rounded
+  border-radius: 0.5rem;
+  border: 1px solid #00a0e9;
+
+  // hover
+  &:hover {
+    background-color: #e6e6e6;
+  }
+
+  // active
+  &:active {
+    background-color: #ccc;
+  }
+
+  // disabled
+  &:disabled {
+    background-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+
+  // focus
+  &:focus {
+    outline: none;
+  }
+}

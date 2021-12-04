@@ -11,6 +11,7 @@ import { SimpleAutomataSystem } from "../ecs/systems/SimpleAutomataSystem";
 import { TimerSystem } from "../ecs/systems/TimerSystem";
 import { useAnimationFrame } from "./useAnimationFrame";
 import { useRecursiveTimeout } from "./useRecursiveTimeout";
+import { SimulationTimerSystem } from "../ecs/systems/SimulationTimerSystem";
 
 const init = () => {
   const time = EntityManager.instance.createEntity();
@@ -21,6 +22,7 @@ const init = () => {
 
   // create systems after adding entities
   Engine.instance.createSystem(TimerSystem);
+  Engine.instance.createSystem(SimulationTimerSystem);
   Engine.instance.createSystem(ClearCanvasSystem);
   Engine.instance.createSystem(GridSystem);
 
