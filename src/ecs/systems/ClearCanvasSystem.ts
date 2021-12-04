@@ -13,7 +13,7 @@ export class ClearCanvasSystem extends BaseSystem {
     this.entityManager,
   );
 
-  public onUpdate(): void {
+  public onRender(): void {
     const canvas = this.canvasQuery.find();
     const gridQuery = this.gridQuery.find();
 

@@ -145,7 +145,7 @@ export class GridSystem extends BaseSystem {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public onUpdate(): void {
+  public onRender(): void {
     const canvas = this.canvasQuery.find();
     const grid = this.gridQuery.find();
 

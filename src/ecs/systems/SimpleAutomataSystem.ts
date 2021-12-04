@@ -2,6 +2,7 @@ import { BaseSystem, Query, IEntity } from "@yoieh/ecs-core";
 import { CellComponent } from "../components/CellComponent";
 import { PositionComponent } from "../components/PositionComponent";
 import { NeighborsComponent } from "../components/NeighborsComponent";
+import { SimulationTimeComponent } from "../components/SimulationTimeComponent";
 
 export class SimpleAutomataSystem extends BaseSystem {
   private lastUpdate: number = 0;
@@ -16,8 +17,19 @@ export class SimpleAutomataSystem extends BaseSystem {
     this.entityManager,
   );
 
+  private time = new Query((entity: IEntity) =>
+    entity.has(SimulationTimeComponent),
+  );
+
   public onUpdate(): void {
-    if (this.lastUpdate + 1000 < Date.now()) {
+    const timeEntity = this.time.find();
+    if (!timeEntity) {
+      return;
+    }
+
+    const time = timeEntity.get(SimulationTimeComponent).Value;
+
+    if (this.lastUpdate + 1000 < time) {
       this.activeCells.foreach((entity: IEntity) => {
         const neighbors = entity.get(NeighborsComponent);
 
@@ -68,7 +80,7 @@ export class SimpleAutomataSystem extends BaseSystem {
         }
       });
 
-      this.lastUpdate = Date.now();
+      this.lastUpdate = time;
     }
   }
 }
