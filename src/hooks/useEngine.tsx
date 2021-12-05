@@ -18,7 +18,8 @@ const init = () => {
   time.add(new TimeComponent());
 
   const grid = EntityManager.instance.createEntity();
-  grid.add(new GridComponent(500, 500, 10));
+
+  grid.add(new GridComponent(window.innerWidth, window.innerHeight, 10));
 
   // create systems after adding entities
   Engine.instance.createSystem(TimerSystem);
