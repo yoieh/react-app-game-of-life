@@ -33,8 +33,12 @@ export class SimpleAutomataSystem extends BaseSystem {
     }
 
     const time = timeEntity.get(SimulationTimeComponent).Value;
+    const { speedMultiplier } = timeEntity.get(SimulationTimeComponent);
 
-    if (this.lastUpdate + 1000 < time) {
+    // this aleast works for now...
+    const nextUpdate = this.lastUpdate + 100 / speedMultiplier;
+
+    if (nextUpdate < time) {
       this.activeCells.foreach((entity: IEntity) => {
         const { X, Y } = entity.get(PositionComponent);
         const neighbors = neighborsCheck.getAllNeighbors(X, Y);
