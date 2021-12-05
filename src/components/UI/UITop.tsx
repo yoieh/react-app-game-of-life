@@ -5,6 +5,7 @@ import { EntityManager } from "@yoieh/ecs-core";
 import { PauseCommandComponent } from "../../ecs/components/PauseCommandComponent";
 import { PlayCommandComponent } from "../../ecs/components/PlayCommandComponent";
 import { SpeedCommandComponent } from "../../ecs/components/SpeedCommandComponent";
+import { ClearGridCommandComponent } from "../../ecs/components/ClearGridCommandComponent";
 
 const pause = () => {
   const entity = EntityManager.instance.createEntity();
@@ -14,6 +15,11 @@ const pause = () => {
 const play = () => {
   const entity = EntityManager.instance.createEntity();
   entity.addComponent(new PlayCommandComponent());
+};
+
+const clear = () => {
+  const entity = EntityManager.instance.createEntity();
+  entity.addComponent(new ClearGridCommandComponent());
 };
 
 export const UITop = function () {
@@ -40,7 +46,9 @@ export const UITop = function () {
     <div className="ui top">
       <div>left</div>
       <div>
-        <button type="button">clear</button>
+        <button type="button" onClick={clear}>
+          clear
+        </button>
         {isPaused ? (
           <button
             type="button"

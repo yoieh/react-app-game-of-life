@@ -12,6 +12,7 @@ import { TimerSystem } from "../ecs/systems/TimerSystem";
 import { useAnimationFrame } from "./useAnimationFrame";
 import { useRecursiveTimeout } from "./useRecursiveTimeout";
 import { SimulationTimerSystem } from "../ecs/systems/SimulationTimerSystem";
+import { ClearGridSystem } from "../ecs/systems/ClearGridSystem";
 
 const init = () => {
   const time = EntityManager.instance.createEntity();
@@ -26,6 +27,8 @@ const init = () => {
   Engine.instance.createSystem(SimulationTimerSystem);
   Engine.instance.createSystem(ClearCanvasSystem);
   Engine.instance.createSystem(GridSystem);
+
+  Engine.instance.createSystem(ClearGridSystem);
 
   Engine.instance.createSystem(ResolveCellActivationSystem);
   Engine.instance.createSystem(ResolveCellDeActivationSystem);
