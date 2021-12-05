@@ -1,17 +1,18 @@
 import { BaseSystem, Query, IEntity } from "@yoieh/ecs-core";
 import { CellComponent } from "../components/CellComponent";
 import { PositionComponent } from "../components/PositionComponent";
-import { NeighborsComponent } from "../components/NeighborsComponent";
 import { SimulationTimeComponent } from "../components/SimulationTimeComponent";
+import { GridComponent } from "../components/GridComponent";
+import Neighbors from "../../utils/Neighbors";
+
+const neighborsCheck = new Neighbors();
 
 export class SimpleAutomataSystem extends BaseSystem {
   private lastUpdate: number = 0;
 
   private activeCells: Query = new Query(
     (entity: IEntity) =>
-      entity.has(CellComponent) &&
-      entity.has(PositionComponent) &&
-      entity.has(NeighborsComponent),
+      entity.has(CellComponent) && entity.has(PositionComponent),
     // &&
     // entity.get(CellComponent).Value === 1
     this.entityManager,
@@ -19,6 +20,10 @@ export class SimpleAutomataSystem extends BaseSystem {
 
   private time = new Query((entity: IEntity) =>
     entity.has(SimulationTimeComponent),
+  );
+
+  private gridQuery: Query = new Query((entity: IEntity) =>
+    entity.has(GridComponent),
   );
 
   public onUpdate(): void {
@@ -31,41 +36,23 @@ export class SimpleAutomataSystem extends BaseSystem {
 
     if (this.lastUpdate + 1000 < time) {
       this.activeCells.foreach((entity: IEntity) => {
-        const neighbors = entity.get(NeighborsComponent);
+        const { X, Y } = entity.get(PositionComponent);
+        const neighbors = neighborsCheck.getAllNeighbors(X, Y);
 
         let activeCount = 0;
 
-        if (neighbors.nw?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
+        const gird = this.gridQuery.find();
 
-        if (neighbors.n?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
+        neighbors.forEach(({ x, y }) => {
+          if (gird) {
+            const width = gird.get(GridComponent).Width;
+            const cell = gird.get(GridComponent).Cells[x + y * width];
 
-        if (neighbors.ne?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
-
-        if (neighbors.e?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
-
-        if (neighbors.se?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
-
-        if (neighbors.s?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
-
-        if (neighbors.sw?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
-
-        if (neighbors.w?.get(CellComponent).Value === 1) {
-          activeCount += 1;
-        }
+            if (cell && cell.get(CellComponent).Value === 1) {
+              activeCount += 1;
+            }
+          }
+        });
 
         // Each cell with one or no neighbors dies, as if by solitude.
         // Each cell with four or more neighbors dies, as if by overpopulation.
