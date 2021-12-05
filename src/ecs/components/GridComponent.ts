@@ -6,7 +6,7 @@ export class GridComponent implements IComponent {
     public Height: number = 0,
     public CellSize: number = 0,
 
-    public Cells: IEntity[] = [],
+    public Cells: { [key: string]: IEntity } = {},
   ) {}
 }
 
