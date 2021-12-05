@@ -22,7 +22,7 @@ export const UITop = function () {
   const handelSetSpeedMultiplier = (currentValue: number, value: number) => {
     let newValue = parseFloat((currentValue + value).toFixed(1));
 
-    if (newValue < 0) {
+    if (newValue <= 0) {
       newValue = 0.1;
     } else if (newValue > 10) {
       newValue = 10;
@@ -63,18 +63,35 @@ export const UITop = function () {
         <button
           type="button"
           onClick={() => {
+            setSpeedMultiplier((c) => handelSetSpeedMultiplier(c, -1));
+          }}>
+          {"<<"}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
             setSpeedMultiplier((c) => handelSetSpeedMultiplier(c, -0.1));
           }}>
-          slower
+          {"<"}
         </button>
-        {speedMultiplier}x
+        {speedMultiplier}x{" "}
         <button
           type="button"
           onClick={() => {
             setSpeedMultiplier((c) => handelSetSpeedMultiplier(c, 0.1));
           }}>
-          faster
+          {">"}
         </button>
+        <button
+          type="button"
+          onClick={() => {
+            setSpeedMultiplier((c) => handelSetSpeedMultiplier(c, 1));
+          }}>
+          {">>"}
+        </button>
+        <small>
+          <i>(updates every ~{Math.floor(100 / speedMultiplier)}ms)</i>
+        </small>
       </div>
       <div>right</div>
     </div>
