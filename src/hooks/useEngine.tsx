@@ -13,6 +13,7 @@ import { useAnimationFrame } from "./useAnimationFrame";
 import { useRecursiveTimeout } from "./useRecursiveTimeout";
 import { SimulationTimerSystem } from "../ecs/systems/SimulationTimerSystem";
 import { ClearGridSystem } from "../ecs/systems/ClearGridSystem";
+import { MouseHighlightSystem } from "../ecs/systems/MouseHighlightSystem";
 
 const init = () => {
   const time = EntityManager.instance.createEntity();
@@ -36,6 +37,7 @@ const init = () => {
   Engine.instance.createSystem(SimpleAutomataSystem);
 
   Engine.instance.createSystem(DrawCellsSystem);
+  Engine.instance.createSystem(MouseHighlightSystem);
 };
 
 const run = (dt: number) => {

@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { EntityManager } from "@yoieh/ecs-core";
+import { EntityManager, Query } from "@yoieh/ecs-core";
 import { useCanvasCamera2D } from "@yoieh/use-canvas-camera2d";
 
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
 import { reziseCanvas } from "./reziseCanvas";
 import { CanvasComponent } from "../ecs/components/CanvasComponent";
+import { MouseTag } from "../ecs/components/MouseTag";
+import { PositionComponent } from "../ecs/components/PositionComponent";
 
 interface CanvasProps {}
 
@@ -59,6 +61,46 @@ export const Canvas: React.FC<CanvasProps> = function () {
       addContextEntity(ctx);
     }
   }, []);
+
+  // track mouse position
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+
+    const mouseMove = (event: MouseEvent) => {
+      if (!event.currentTarget) {
+        return;
+      }
+
+      // const rect = event.currentTarget?.getBoundingClientRect();
+
+      const transformedPoint = getTransformedPoint(
+        event.clientX,
+        event.clientY,
+      );
+
+      // query for entities with the mouse component
+      const entities = new Query(
+        (entity) => entity.has(MouseTag) && entity.has(PositionComponent),
+      );
+
+      // update the mouse component
+      entities.foreach((entity) => {
+        // console.log(entity);
+        const mousePosition = entity.get(PositionComponent);
+        mousePosition.X = transformedPoint.x;
+        mousePosition.Y = transformedPoint.y;
+      });
+    };
+
+    if (ctx) {
+      canvas?.addEventListener("mousemove", mouseMove);
+    }
+
+    return () => {
+      canvas?.removeEventListener("mousemove", mouseMove);
+    };
+  }, [canvasRef, getTransformedPoint]);
 
   return (
     <canvas
