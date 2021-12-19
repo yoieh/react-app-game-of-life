@@ -31,7 +31,7 @@ export const Canvas: React.FC<CanvasProps> = function () {
     // offset,
     startPan,
     // reset,
-    // getTransformedPoint,
+    getTransformedPoint,
   } = useCanvasCamera2D(
     canvasRef,
     canvasRef.current?.width,
@@ -63,7 +63,11 @@ export const Canvas: React.FC<CanvasProps> = function () {
   return (
     <canvas
       ref={canvasRef}
-      onClick={(e) => clickOnCanvas(e)}
+      onClick={(e) => {
+        const pos = getTransformedPoint(e.pageX, e.pageY);
+
+        clickOnCanvas(e, pos);
+      }}
       onMouseDown={(e) => {
         // only pan if middle mouse button
         if (e.button === 1) {
