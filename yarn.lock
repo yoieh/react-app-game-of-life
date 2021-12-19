@@ -2576,10 +2576,10 @@
   dependencies:
     "tslib" "^2.3.1"
 
-"@yoieh/use-canvas-camera2d@^0.1.1":
-  "integrity" "sha512-chkRB9tQcPRzjMjVymKJROeqd9ucCBEluYRx+xT5WfGA6LDPCsKFoVeX8wg8/T4Lg+896NFjUYs35onBQ8nFag=="
-  "resolved" "https://registry.npmjs.org/@yoieh/use-canvas-camera2d/-/use-canvas-camera2d-0.1.1.tgz"
-  "version" "0.1.1"
+"@yoieh/use-canvas-camera2d@^0.1.2":
+  "integrity" "sha512-AG0Uhzyt/rm9SodbN0XFPio7QQKPOgCn+GW+IIsPBzNPFxb8SPJpqQAFZobXwkkkBPgqkJa/KhES2KOsCa5E/g=="
+  "resolved" "https://registry.npmjs.org/@yoieh/use-canvas-camera2d/-/use-canvas-camera2d-0.1.2.tgz"
+  "version" "0.1.2"
 
 "abab@^2.0.3", "abab@^2.0.5":
   "integrity" "sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q=="
@@ -2825,7 +2825,9 @@
     "readable-stream" "^3.6.0"
 
 "are-we-there-yet@~1.1.2":
-  "version" "1.1.6"
+  "integrity" "sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw=="
+  "resolved" "https://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-2.0.0.tgz"
+  "version" "2.0.0"
   dependencies:
     "delegates" "^1.0.0"
     "readable-stream" "^3.6.0"
