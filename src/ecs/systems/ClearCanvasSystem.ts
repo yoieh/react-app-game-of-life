@@ -22,12 +22,10 @@ export class ClearCanvasSystem extends BaseSystem {
     }
 
     const ctx = canvas.get(CanvasComponent).Context;
-    ctx.clearRect(
-      0,
-      0,
-      gridQuery.get(GridComponent).Width,
-      gridQuery.get(GridComponent).Height,
-    );
+    const storedTransform = ctx.getTransform();
+    // eslint-disable-next-line no-self-assign
+    ctx.canvas.width = canvas.get(CanvasComponent).Context.canvas.width;
+    ctx.setTransform(storedTransform);
   }
 }
 

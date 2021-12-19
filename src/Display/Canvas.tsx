@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { EntityManager } from "@yoieh/ecs-core";
+import { useCanvasCamera2D } from "@yoieh/use-canvas-camera2d";
 
 import { leftClickOnCanvas } from "./leftClickOnCanvas";
 import { clickOnCanvas } from "./clickOnCanvas";
@@ -23,6 +24,20 @@ export const Canvas: React.FC<CanvasProps> = function () {
     leftClickOnCanvas(event);
   }, []);
 
+  const {
+    // context,
+    // viewportTopLeft,
+    // scale,
+    // offset,
+    startPan,
+    // reset,
+    // getTransformedPoint,
+  } = useCanvasCamera2D(
+    canvasRef,
+    canvasRef.current?.width,
+    canvasRef.current?.height,
+  );
+
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas?.addEventListener("contextmenu", handleContextMenu);
@@ -45,7 +60,18 @@ export const Canvas: React.FC<CanvasProps> = function () {
     }
   }, []);
 
-  return <canvas ref={canvasRef} onClick={(e) => clickOnCanvas(e)} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      onClick={(e) => clickOnCanvas(e)}
+      onMouseDown={(e) => {
+        // only pan if middle mouse button
+        if (e.button === 1) {
+          startPan(e);
+        }
+      }}
+    />
+  );
 };
 
 export default Canvas;
