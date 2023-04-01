@@ -42,7 +42,7 @@
     "prettier": "^2.4.1",
     "react-scripts": "5.0.1",
     "sass": "^1.43.4",
-    "yarn-audit-fix": "^7.1.2"
+    "yarn-audit-fix": "^9.3.10"
   },
   "scripts": {
     "start": "react-scripts start",
